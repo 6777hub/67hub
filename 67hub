@@ -1,0 +1,25 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local TradeEvent = Instance.new("RemoteEvent")
+TradeEvent.Name = "TradeEvent"
+TradeEvent.Parent = ReplicatedStorage
+
+local trades = {}
+
+TradeEvent.OnServerEvent:Connect(function(player, action, target, item)
+	if action == "request" then
+		trades[target] = player
+		
+	elseif action == "accept" then
+		local requester = trades[player]
+		if requester then
+			print(player.Name .. " accepted trade from " .. requester.Name)
+		end
+		
+	elseif action == "confirm" then
+		-- BOTH PLAYERS CONFIRM
+		-- Check inventories here
+		
+		print("Trade completed safely")
+	end
+end)
